@@ -45,4 +45,15 @@
         app:unselectedAction2="@drawable/like_unselected"
         app:unselectedAction3="@drawable/replay_unselected" />
 
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_heightPercent="50%"
+        app:layout_widthPercent="100%"
+        android:layout_alignParentBottom="true"
+        android:background="#212121"
+        >
+
+    </LinearLayout>
+
 </android.support.percent.PercentRelativeLayout>
