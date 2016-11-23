@@ -30,15 +30,15 @@ public class SlantView extends View {
 
         int w = getWidth(), h = getHeight();
         paint.setStrokeWidth(2);
-        paint.setColor(Color.WHITE);
+        paint.setColor(Color.parseColor("#424242"));
         paint.setStyle(Paint.Style.FILL_AND_STROKE);
         paint.setAntiAlias(true);
 
         path = new Path();
         path.setFillType(Path.FillType.EVEN_ODD);
-        path.moveTo(0,0);
-        path.lineTo(0,h);
+        path.moveTo(w,0);
         path.lineTo(w,h);
+        path.lineTo(0,h);
         path.close();
         canvas.drawPath(path, paint);
     }
