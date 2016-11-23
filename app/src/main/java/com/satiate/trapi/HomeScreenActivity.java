@@ -7,11 +7,14 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.cleveroad.audiovisualization.AudioVisualization;
 import com.cleveroad.audiovisualization.DbmHandler;
 import com.cleveroad.audiovisualization.VisualizerDbmHandler;
+import com.satiate.trapi.adapters.HomeMusicListAdapter;
 
 import co.mobiwise.library.InteractivePlayerView;
 import co.mobiwise.library.OnActionClickedListener;
@@ -22,6 +25,7 @@ public class HomeScreenActivity extends AppCompatActivity {
     private AudioVisualization audioVisualization;
     private MediaPlayer mediaPlayer;
     private InteractivePlayerView ipv;
+    private RecyclerView rvMusic;
 
 
     @Override
@@ -31,6 +35,7 @@ public class HomeScreenActivity extends AppCompatActivity {
 
         audioVisualization = (AudioVisualization) findViewById(R.id.visualizer_view);
         ipv = (InteractivePlayerView) findViewById(R.id.ipv);
+        rvMusic = (RecyclerView) findViewById(R.id.rv_music_home_screen);
 
         mediaPlayer = MediaPlayer.create(HomeScreenActivity.this, R.raw.sample);
         mediaPlayer.start();
@@ -58,6 +63,8 @@ public class HomeScreenActivity extends AppCompatActivity {
 
         ipv.start();
 
+        setupMusicList();
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.MODIFY_AUDIO_SETTINGS) == PackageManager.PERMISSION_GRANTED)
         {
@@ -67,6 +74,12 @@ public class HomeScreenActivity extends AppCompatActivity {
             requestPermissions();
         }
 
+    }
+
+    private void setupMusicList() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HomeScreenActivity.this);
+        rvMusic.setLayoutManager(linearLayoutManager);
+        rvMusic.setAdapter(new HomeMusicListAdapter(HomeScreenActivity.this));
     }
 
     private void setupMediaVisualization(MediaPlayer mediaPlayer)
