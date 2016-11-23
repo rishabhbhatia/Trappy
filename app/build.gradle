@@ -25,4 +25,6 @@ dependencies {
     compile 'com.cleveroad:audiovisualization:0.9.1'
     compile 'com.github.claucookie.miniequalizer:library:1.0.0'
     compile 'com.github.iammert:InteractivePlayerView:f4f6490290'
+    compile 'com.android.support:percent:24.1.1'
+
 }

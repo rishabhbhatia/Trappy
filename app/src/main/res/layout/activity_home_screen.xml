@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_home_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.satiate.trapi.HomeScreenActivity">
+    tools:context="com.satiate.trapi.HomeScreenActivity"
+    android:gravity="center"
+    android:layout_gravity="center"
+    >
 
     <com.cleveroad.audiovisualization.GLAudioVisualizationView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/visualizer_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_heightPercent="100%"
+        app:layout_widthPercent="100%"
         app:av_bubble_size="@dimen/bubble_size"
         app:av_randomize_bubble_size="true"
         app:av_wave_height="@dimen/wave_height"
@@ -24,10 +29,13 @@
 
     <co.mobiwise.library.InteractivePlayerView
         android:id="@+id/ipv"
-        android:layout_width="230dp"
-        android:layout_height="230dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_heightPercent="30%"
+        app:layout_widthPercent="50%"
         app:imageCover="@drawable/imagetest"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
         app:emptyColor="#aaffffff"
         app:loadedColor="#fff44336"
         app:selectedAction1="@drawable/shuffle_selected"
@@ -37,4 +45,4 @@
         app:unselectedAction2="@drawable/like_unselected"
         app:unselectedAction3="@drawable/replay_unselected" />
 
-</RelativeLayout>
+</android.support.percent.PercentRelativeLayout>
