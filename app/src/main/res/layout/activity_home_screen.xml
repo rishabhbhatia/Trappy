@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_home_screen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.satiate.trapi.HomeScreenActivity">
+
+    <com.cleveroad.audiovisualization.GLAudioVisualizationView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/visualizer_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:av_bubble_size="@dimen/bubble_size"
+        app:av_randomize_bubble_size="true"
+        app:av_wave_height="@dimen/wave_height"
+        app:av_footer_height="@dimen/footer_height"
+        app:av_waves_count="7"
+        app:av_layers_count="4"
+        app:av_background_color="@android:color/transparent"
+        />
+
+</RelativeLayout>
