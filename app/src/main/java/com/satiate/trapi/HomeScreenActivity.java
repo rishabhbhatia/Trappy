@@ -7,16 +7,21 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.cleveroad.audiovisualization.AudioVisualization;
 import com.cleveroad.audiovisualization.DbmHandler;
 import com.cleveroad.audiovisualization.VisualizerDbmHandler;
+
+import co.mobiwise.library.InteractivePlayerView;
+import co.mobiwise.library.OnActionClickedListener;
 
 public class HomeScreenActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE = 112;
     private AudioVisualization audioVisualization;
     private MediaPlayer mediaPlayer;
+    private InteractivePlayerView ipv;
 
 
     @Override
@@ -25,9 +30,33 @@ public class HomeScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_screen);
 
         audioVisualization = (AudioVisualization) findViewById(R.id.visualizer_view);
+        ipv = (InteractivePlayerView) findViewById(R.id.ipv);
 
         mediaPlayer = MediaPlayer.create(HomeScreenActivity.this, R.raw.sample);
         mediaPlayer.start();
+
+        ipv.setMax(mediaPlayer.getDuration()/1000); // music duration in seconds.
+        Log.d("rishabh", "hello music dur "+mediaPlayer.getDuration()/1000);
+        ipv.setOnActionClickedListener(new OnActionClickedListener() {
+            @Override
+            public void onActionClicked(int id) {
+                switch (id){
+                    case 1:
+                        //Called when 1. action is clicked.
+                        break;
+                    case 2:
+                        //Called when 2. action is clicked.
+                        break;
+                    case 3:
+                        //Called when 3. action is clicked.
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+
+        ipv.start();
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.MODIFY_AUDIO_SETTINGS) == PackageManager.PERMISSION_GRANTED)

@@ -24,4 +24,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.cleveroad:audiovisualization:0.9.1'
     compile 'com.github.claucookie.miniequalizer:library:1.0.0'
+    compile 'com.github.iammert:InteractivePlayerView:f4f6490290'
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_home_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,5 +21,20 @@
         app:av_layers_count="4"
         app:av_background_color="@android:color/transparent"
         />
+
+    <co.mobiwise.library.InteractivePlayerView
+        android:id="@+id/ipv"
+        android:layout_width="230dp"
+        android:layout_height="230dp"
+        app:imageCover="@drawable/imagetest"
+        android:layout_centerInParent="true"
+        app:emptyColor="#aaffffff"
+        app:loadedColor="#fff44336"
+        app:selectedAction1="@drawable/shuffle_selected"
+        app:selectedAction2="@drawable/like_selected"
+        app:selectedAction3="@drawable/replay_selected"
+        app:unselectedAction1="@drawable/shuffle_unselected"
+        app:unselectedAction2="@drawable/like_unselected"
+        app:unselectedAction3="@drawable/replay_unselected" />
 
 </RelativeLayout>
