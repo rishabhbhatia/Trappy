@@ -1,6 +1,7 @@
 package com.satiate.trapi.adapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.satiate.trapi.R;
 import com.satiate.trapi.models.Song;
 
@@ -62,6 +64,12 @@ public class HomeMusicListAdapter extends RecyclerView.Adapter<HomeMusicListAdap
 
         holder.tvSongName.setText(song.getTitle());
         holder.tvSongArtist.setText(song.getArtist());
+
+        Glide.with(context)
+                .load(Uri.parse("https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSLeufrp6UqEB8Zkb9OkjqoejqwWn1R1Tjhd5HKu2rxWp8eqNH1NQ"))
+                .asBitmap()
+                .centerCrop()
+                .into(holder.ivSongThumb);
     }
 
     @Override
