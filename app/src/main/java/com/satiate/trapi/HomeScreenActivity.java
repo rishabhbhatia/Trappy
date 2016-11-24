@@ -59,34 +59,9 @@ public class HomeScreenActivity extends AppCompatActivity {
         ipv = (InteractivePlayerView) findViewById(R.id.ipv);
         rvMusic = (RecyclerView) findViewById(R.id.rv_music_home_screen);
 
-        mediaPlayer = MediaPlayer.create(HomeScreenActivity.this, R.raw.sample);
-        mediaPlayer.start();
-
-        ipv.setMax(mediaPlayer.getDuration()/1000); // music duration in seconds.
-        Log.d("rishabh", "hello music dur "+mediaPlayer.getDuration()/1000);
+        mediaPlayer = new MediaPlayer();
 
         songs = new ArrayList<>();
-
-        ipv.setOnActionClickedListener(new OnActionClickedListener() {
-            @Override
-            public void onActionClicked(int id) {
-                switch (id){
-                    case 1:
-                        //Called when 1. action is clicked.
-                        break;
-                    case 2:
-                        //Called when 2. action is clicked.
-                        break;
-                    case 3:
-                        //Called when 3. action is clicked.
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-
-        ipv.start();
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.MODIFY_AUDIO_SETTINGS) == PackageManager.PERMISSION_GRANTED)
@@ -166,9 +141,33 @@ public class HomeScreenActivity extends AppCompatActivity {
             MusicService.MusicBinder binder = (MusicService.MusicBinder)service;
             //get service
             musicSrv = binder.getService();
+            musicSrv.initMusicPlayer(mediaPlayer, ipv);
+
             //pass list
             musicSrv.setList(songs);
             musicBound = true;
+
+            ipv.setMax(1);
+
+            ipv.setOnActionClickedListener(new OnActionClickedListener() {
+                @Override
+                public void onActionClicked(int id) {
+                    switch (id){
+                        case 1:
+                            //Called when 1. action is clicked.
+                            break;
+                        case 2:
+                            //Called when 2. action is clicked.
+                            break;
+                        case 3:
+                            //Called when 3. action is clicked.
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            });
+
         }
 
         @Override

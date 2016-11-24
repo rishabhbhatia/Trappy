@@ -17,6 +17,8 @@ import android.util.Log;
 
 import com.satiate.trapi.models.Song;
 
+import co.mobiwise.library.InteractivePlayerView;
+
 /**
  * Created by Rishabh Bhatia on 24/11/16.
  */
@@ -28,6 +30,7 @@ public class MusicService extends Service implements
     private MediaPlayer player;
     private ArrayList<Song> songs;
     private int songPosn;
+    private InteractivePlayerView ipv;
 
     private final IBinder musicBind = new MusicBinder();
 
@@ -49,14 +52,14 @@ public class MusicService extends Service implements
         super.onCreate();
 
         songPosn=0;
-
-        player = new MediaPlayer();
-
-        initMusicPlayer();
     }
 
-    public void initMusicPlayer()           //set player properties
+    public void initMusicPlayer(MediaPlayer mediaPlayer, InteractivePlayerView ipv)           //set player properties
     {
+
+        this.player = mediaPlayer;
+        this.ipv = ipv;
+
         player.setWakeMode(getApplicationContext(),
                 PowerManager.PARTIAL_WAKE_LOCK);
         player.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -83,6 +86,7 @@ public class MusicService extends Service implements
     public void playSong()  //play a song
     {
         player.reset();
+        ipv.stop();
 
         Song playSong = songs.get(songPosn);
         long currSong = playSong.getId();
@@ -100,6 +104,10 @@ public class MusicService extends Service implements
         player.prepareAsync();
     }
 
+    public MediaPlayer getPlayer() {
+        return player;
+    }
+
     @Override
     public void onCompletion(MediaPlayer mp) {
 
@@ -113,5 +121,16 @@ public class MusicService extends Service implements
     @Override
     public void onPrepared(MediaPlayer mp) {
         mp.start();
+
+        if(mp.getDuration() != 0)
+        {
+            ipv.setMax(mp.getDuration()/1000); // music duration in seconds.
+            Log.d("rishabh", "hello music dur "+mp.getDuration()/1000);
+        }else
+        {
+            ipv.setMax(1);
+        }
+
+        ipv.start();
     }
 }
