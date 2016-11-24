@@ -1,24 +1,31 @@
 package com.satiate.trapi;
 
 import android.Manifest;
+import android.content.ComponentName;
 import android.content.ContentResolver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.cleveroad.audiovisualization.AudioVisualization;
 import com.cleveroad.audiovisualization.DbmHandler;
 import com.cleveroad.audiovisualization.VisualizerDbmHandler;
 import com.satiate.trapi.adapters.HomeMusicListAdapter;
 import com.satiate.trapi.models.Song;
+import com.satiate.trapi.services.MusicService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,6 +42,10 @@ public class HomeScreenActivity extends AppCompatActivity {
     private InteractivePlayerView ipv;
     private RecyclerView rvMusic;
     private ArrayList<Song> songs;
+
+    private MusicService musicSrv;
+    private Intent playIntent;
+    private boolean musicBound=false;
 
 
     @Override
@@ -86,6 +97,16 @@ public class HomeScreenActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(playIntent==null){
+            playIntent = new Intent(this, MusicService.class);
+            bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE);
+            startService(playIntent);
+        }
+    }
+
     private void setupMusicList()
     {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HomeScreenActivity.this);
@@ -109,6 +130,11 @@ public class HomeScreenActivity extends AppCompatActivity {
         setupMusicList();
     }
 
+    public void songPicked(View view){
+        musicSrv.setSong(Integer.parseInt(view.getTag().toString()));
+        musicSrv.playSong();
+    }
+
     private void requestPermissions()
     {
         ActivityCompat.requestPermissions(
@@ -116,6 +142,25 @@ public class HomeScreenActivity extends AppCompatActivity {
                 new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.MODIFY_AUDIO_SETTINGS},
                 REQUEST_CODE);
     }
+
+    //connect to the service
+    private ServiceConnection musicConnection = new ServiceConnection(){
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            MusicService.MusicBinder binder = (MusicService.MusicBinder)service;
+            //get service
+            musicSrv = binder.getService();
+            //pass list
+            musicSrv.setList(songs);
+            musicBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            musicBound = false;
+        }
+    };
 
     @Override
     protected void onResume() {
@@ -127,21 +172,6 @@ public class HomeScreenActivity extends AppCompatActivity {
     protected void onPause() {
         audioVisualization.onPause();
         super.onPause();
-    }
-
-    @Override
-    protected void onDestroy() {
-        audioVisualization.release();
-        if(mediaPlayer != null)
-        {
-            if(mediaPlayer.isPlaying())
-            {
-                mediaPlayer.stop();
-            }
-
-            mediaPlayer.release();
-        }
-        super.onDestroy();
     }
 
     @Override
@@ -185,6 +215,25 @@ public class HomeScreenActivity extends AppCompatActivity {
             }
             while (musicCursor.moveToNext());
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopService(playIntent);
+        musicSrv=null;
+
+        audioVisualization.release();
+        if(mediaPlayer != null)
+        {
+            if(mediaPlayer.isPlaying())
+            {
+                mediaPlayer.stop();
+            }
+
+            mediaPlayer.release();
+        }
+
+        super.onDestroy();
     }
 
 }
