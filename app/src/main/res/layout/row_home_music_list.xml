@@ -13,6 +13,7 @@
         android:gravity="center">
 
         <ImageView
+            android:id="@+id/iv_icon_song_row"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@mipmap/ic_launcher"
@@ -29,6 +30,7 @@
         >
 
         <TextView
+            android:id="@+id/tv_name_song_row"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
@@ -37,6 +39,7 @@
             />
 
         <TextView
+            android:id="@+id/tv_artist_song_row"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="12sp"
@@ -55,7 +58,7 @@
 
         <es.claucookie.miniequalizerlibrary.EqualizerView
             xmlns:custom="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/equalizer_view"
+            android:id="@+id/equalizer_view_song_row"
             android:layout_width="30dp"
             android:layout_height="30dp"
             custom:foregroundColor="@color/color_red"

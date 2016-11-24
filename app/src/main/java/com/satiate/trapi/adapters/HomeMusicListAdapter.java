@@ -5,9 +5,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.satiate.trapi.R;
+import com.satiate.trapi.models.Song;
 
+import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import es.claucookie.miniequalizerlibrary.EqualizerView;
 
 /**
@@ -18,10 +25,12 @@ public class HomeMusicListAdapter extends RecyclerView.Adapter<HomeMusicListAdap
 
 
     private Context context;
+    private ArrayList<Song> songs;
 
-    public HomeMusicListAdapter(Context context) {
+    public HomeMusicListAdapter(Context context, ArrayList<Song> songs) {
         try {
             this.context = context;
+            this.songs = songs;
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -45,29 +54,45 @@ public class HomeMusicListAdapter extends RecyclerView.Adapter<HomeMusicListAdap
     @Override
     public void onBindViewHolder(final HomeMusicListViewHolder holder, final int position) {
 
+        holder.clear();
+
+        Song song = songs.get(position);
+
         holder.equalizerView.animateBars();
+
+        holder.tvSongName.setText(song.getTitle());
+        holder.tvSongArtist.setText(song.getArtist());
     }
 
     @Override
     public int getItemCount() {
-        return 30;
-    }   //TODO
+        return songs.size();
+    }
 
     static class HomeMusicListViewHolder extends RecyclerView.ViewHolder {
 
-        private EqualizerView equalizerView;
+        @BindView(R.id.equalizer_view_song_row)
+        EqualizerView equalizerView;
+        @BindView(R.id.tv_name_song_row)
+        TextView tvSongName;
+        @BindView(R.id.tv_artist_song_row)
+        TextView tvSongArtist;
+        @BindView(R.id.iv_icon_song_row)
+        ImageView ivSongThumb;
 
         public HomeMusicListViewHolder(View itemView) {
             super(itemView);
             try {
-                equalizerView = (EqualizerView) itemView.findViewById(R.id.equalizer_view);
+                ButterKnife.bind(this, itemView);
             }catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
         public void clear() {
-
+            tvSongName.setText("");
+            tvSongArtist.setText("");
+            ivSongThumb.setImageBitmap(null);
         }
     }
 
