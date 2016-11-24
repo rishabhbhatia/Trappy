@@ -122,7 +122,8 @@ public class MusicService extends Service implements
     public void onPrepared(MediaPlayer mp) {
         mp.start();
 
-        if(mp.getDuration() != 0)
+        Log.d("rishabh", "duration is "+mp.getDuration());
+        if(mp.getDuration() != 0 && mp.getDuration() > 1000)
         {
             ipv.setMax(mp.getDuration()/1000); // music duration in seconds.
             Log.d("rishabh", "hello music dur "+mp.getDuration()/1000);
