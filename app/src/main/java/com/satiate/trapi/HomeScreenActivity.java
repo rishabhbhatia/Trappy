@@ -24,6 +24,8 @@ import com.cleveroad.audiovisualization.AudioVisualization;
 import com.cleveroad.audiovisualization.DbmHandler;
 import com.cleveroad.audiovisualization.VisualizerDbmHandler;
 import com.satiate.trapi.adapters.HomeMusicListAdapter;
+import com.satiate.trapi.interfaces.RecyclerClickListener;
+import com.satiate.trapi.listeners.RecyclerTouchListener;
 import com.satiate.trapi.models.Song;
 import com.satiate.trapi.services.MusicService;
 
@@ -112,6 +114,18 @@ public class HomeScreenActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(HomeScreenActivity.this);
         rvMusic.setLayoutManager(linearLayoutManager);
         rvMusic.setAdapter(new HomeMusicListAdapter(HomeScreenActivity.this, songs));
+
+        rvMusic.addOnItemTouchListener(new RecyclerTouchListener(HomeScreenActivity.this, rvMusic, new RecyclerClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                songPicked(position);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
     }
 
     private void setupMediaVisualization(MediaPlayer mediaPlayer)
@@ -130,8 +144,9 @@ public class HomeScreenActivity extends AppCompatActivity {
         setupMusicList();
     }
 
-    public void songPicked(View view){
-        musicSrv.setSong(Integer.parseInt(view.getTag().toString()));
+    public void songPicked(int position)
+    {
+        musicSrv.setSong(position);
         musicSrv.playSong();
     }
 
