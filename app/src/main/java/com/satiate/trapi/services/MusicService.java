@@ -87,6 +87,7 @@ public class MusicService extends Service implements
     {
         player.reset();
         ipv.stop();
+        ipv.setProgress(0);
 
         Song playSong = songs.get(songPosn);
         long currSong = playSong.getId();
