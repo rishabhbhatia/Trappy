@@ -74,4 +74,15 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_heightPercent="50%"
+        app:layout_widthPercent="50%"
+        android:id="@+id/iv_image"
+        android:src="@drawable/imagetest"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        />
+
 </android.support.percent.PercentRelativeLayout>

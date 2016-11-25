@@ -17,8 +17,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.cleveroad.audiovisualization.AudioVisualization;
 import com.cleveroad.audiovisualization.DbmHandler;
@@ -33,6 +33,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import co.mobiwise.library.InteractivePlayerView;
 import co.mobiwise.library.OnActionClickedListener;
 
@@ -49,11 +51,16 @@ public class HomeScreenActivity extends AppCompatActivity {
     private Intent playIntent;
     private boolean musicBound=false;
 
+    @BindView(R.id.iv_image)
+    ImageView imageView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
+
+        ButterKnife.bind(this);
 
         audioVisualization = (AudioVisualization) findViewById(R.id.visualizer_view);
         ipv = (InteractivePlayerView) findViewById(R.id.ipv);
@@ -72,6 +79,11 @@ public class HomeScreenActivity extends AppCompatActivity {
             requestPermissions();
         }
 
+       /* ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(imageView, "rotationY", 0.0f, 359f);
+        objectAnimator.setDuration(5000);
+        objectAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+        objectAnimator.setInterpolator(new LinearInterpolator());
+        objectAnimator.start();*/       //TODO this is what i want ;)
     }
 
     @Override
